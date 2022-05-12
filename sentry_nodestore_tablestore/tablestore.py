@@ -18,6 +18,10 @@ class TablestoreError(Exception):
     pass
 
 class TablestoreKVStorage(KVStorage[str, bytes]):
+    # There is a general limit that allow max 2MB of the value
+    # https://www.alibabacloud.com/help/tablestore/latest/general-limits
+    max_size = 1024 * 1024 * 2
+
     class Flags(enum.IntFlag):
         # XXX: Compression flags are assumed to be mutually exclusive, the
         # behavior is explicitly undefined if both bits are set on a record.
@@ -70,12 +74,11 @@ class TablestoreKVStorage(KVStorage[str, bytes]):
             return client
 
     def _get_table_or_none(self) -> Optional[DescribeTableResponse]:
-        client = self._get_client()
         try:
-            table = client.describe_table(self.table_name)
+            table = self._get_client().describe_table(self.table_name)
             return table
         except OTSServiceError as e:
-            logger.debug("Describe table (%s) failed.", self.table_name, exc_info=e)
+            logger.debug("Failed to describe table (%s) with (%s).", self.table_name, e)
             return None
 
     @staticmethod
@@ -84,8 +87,10 @@ class TablestoreKVStorage(KVStorage[str, bytes]):
             yield arr[i: i + size]
 
     def get(self, key: str) -> Optional[bytes]:
-        row = self._get_client().get_row(self.table_name, self.__tuple_key(key), )
-        if row is None:
+        try:
+            _, row, _ = self._get_client().get_row(self.table_name, self.__tuple_key(key), )
+        except OTSServiceError as e:
+            logger.debug("Failed to get row (%s) with (%s).", key, e)
             return None
 
         return self.__decode_row(row)
@@ -104,8 +109,8 @@ class TablestoreKVStorage(KVStorage[str, bytes]):
                     if value is not None:
                         yield item.row, value
                 else:
-                    error = item.error
-                    logger.debug("Failed to get row (%s) with error (%s): %s", key, error.code, error.message)
+                    e = item.error
+                    logger.debug("Failed to get row (%s) with error (ErrorCode: %s, ErrorMessage: %s).", key, e.code, e.message)
                     failed += 1
             finished += len(chunk)
             logger.debug("Batch getting %d rows, %d finished with %d failed.", len(keys), finished, failed)
@@ -129,7 +134,7 @@ class TablestoreKVStorage(KVStorage[str, bytes]):
 
         value = data[0]
 
-        flags = columns.get("flags")
+        flags = columns.get("flags")[0]
         if flags:
             flags = self.Flags(flags)
 
@@ -179,12 +184,16 @@ class TablestoreKVStorage(KVStorage[str, bytes]):
         if self.compression:
             compression_flag, strategy = self.compression_strategies[self.compression]
             flags |= compression_flag
-            value = strategy.encode(value)
+            value = bytearray(strategy.encode(value))
 
-        assert len(value) <= self.max_size
+        assert len(value) <= self.max_size, f"Value size ({len(value)}) is larger than the general limit 2MB."
 
         row = self.__row(key, value, flags)
-        self._get_client().put_row(self.table_name, row)
+
+        try:
+            self._get_client().put_row(self.table_name, row)
+        except OTSServiceError as e:
+            logger.debug("Failed to set row (%s) with (%s).", key, e)
 
     def delete(self, key: str) -> None:
         condition = Condition(RowExistenceExpectation.IGNORE)
