@@ -66,6 +66,10 @@ SENTRY_NODESTORE_OPTIONS = {
     'end_point': 'https://sentry-self-hosted.cn-shanghai.vpc.tablestore.aliyuncs.com',
     'access_key_id': 'LTAI****************LYhz',
     'access_key_secret': 'MKs5**********************6t0J',
+
+    # A boolean whether to enable zlib-compression, or the string "zstd" to use zstd.
+    # Use zstd compression to override the default zlib for more compact and more efficient
+    'compression': 'zstd'
 }
 
 # Set log-level for debugging
@@ -74,4 +78,12 @@ logger = logging.getLogger('sentry_nodestore_tablestore')
 logger.setLevel('DEBUG')
 logger = logging.getLogger('tablestore-client')
 logger.setLevel('DEBUG')
+```
+
+## Bootstrap
+
+Execute the command to bootstrap tablestore (create or update the table):
+
+```Shell
+sentry upgrade --with-nodestore
 ```
