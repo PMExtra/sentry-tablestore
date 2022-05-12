@@ -17,7 +17,7 @@ install_requires = [
 
 setup(
     name='sentry-nodestore-tablestore',
-    version='1.0.0-alpha',
+    version='1.0.0a1',
     author='PM Extra <pm@jubeat.net>',
     author_email='pm@jubeat.net',
     url='https://github.com/PMExtra/sentry-nodestore-tablestore',
