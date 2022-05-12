@@ -15,15 +15,16 @@ This means the large amounts of key-value data were stored in the SQL database.
 
 It's horrible, it can lead to rapid growth in the size of SQL database, and make it difficult to clean up.
 
-For more details, please ref https://forum.sentry.io/t/postgres-nodestore-node-table-124gb/12753/3 .
+For more details from https://forum.sentry.io/t/postgres-nodestore-node-table-124gb/12753/3 .
 
-So, this extension was born.
-It provides another solution than Django or BigTable,
-just [Alicloud Tablestore (OTS)](https://www.alibabacloud.com/product/table-store).
+Therefore, this project came into being.
+It provides a new solution in addition to Django Database or BigTable,
+that is [Alicloud Tablestore (OTS)](https://www.alibabacloud.com/product/table-store).
 
 ## Features
--[x] Implement the TablestoreNodeStorage backend. 
--[ ] Support migrating data from current nodestore backend to the new one.
+
+- [x] Implement the TablestoreNodeStorage backend.
+- [ ] Support migrating data from current nodestore backend to the new one.
 
 ## Prerequisites
 Sentry 21.9.0 and newer.
