@@ -101,7 +101,7 @@ class TablestoreKVStorage(KVStorage[str, bytes]):
         # https://www.alibabacloud.com/help/tablestore/latest/general-limits
         for chunk in self.__chunk(keys, 100):
             request = BatchGetRowRequest()
-            request.add(TableInBatchGetRowItem(self.table_name, [self.__tuple_key(key) for key in chunk]))
+            request.add(TableInBatchGetRowItem(self.table_name, [self.__tuple_key(key) for key in chunk], max_version=1))
             response = self._get_client().batch_get_row(request)
             for key, item in zip(chunk, response.get_result_by_table(self.table_name)):
                 if item.is_ok:
