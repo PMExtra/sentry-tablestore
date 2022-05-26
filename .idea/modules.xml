@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/sentry-nodestore-tablestore.iml" filepath="$PROJECT_DIR$/.idea/sentry-nodestore-tablestore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/sentry-tablestore.iml" filepath="$PROJECT_DIR$/.idea/sentry-tablestore.iml" />
     </modules>
   </component>
 </project>

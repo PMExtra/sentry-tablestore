@@ -1,4 +1,4 @@
-# sentry-nodestore-tablestore
+# sentry-tablestore
 
 An extension for Sentry which support [Alicloud Tablestore (OTS)](https://www.alibabacloud.com/product/table-store)
 as a [node storage](https://develop.sentry.dev/services/nodestore/) backend.
@@ -27,21 +27,21 @@ that is [Alicloud Tablestore (OTS)](https://www.alibabacloud.com/product/table-s
 - [ ] Support migrating data from current nodestore backend to the new one.
 
 ## Prerequisites
-Sentry 21.9.0 and newer.
+Sentry 21.9.0 or higher.
 
 An Tablestore instance of [Alibaba Cloud (International)](https://www.alibabacloud.com/product/table-store)
 or [Aliyun (China)](https://www.aliyun.com/product/ots?source=5176.11533457&userCode=wh20sycz).
 
 ## Installation
-To install, simply add `sentry-nodestore-tablestore` to your *requirements.txt* for your Sentry environment (or `pip install sentry-nodestore-tablestore`).
+To install, simply add `sentry-tablestore` to your *requirements.txt* for your Sentry environment (or `pip install sentry-tablestore`).
 
 ## Configuration
-To configure Sentry to use this module, set `sentry_nodestore_tablestore.backend.TablestoreNodeStorage` to your `SENTRY_NODESTORE` in your *sentry.conf.py*, like this:
+To configure Sentry to use this module, set `sentry_tablestore.nodestore.backend.TablestoreNodeStorage` to your `SENTRY_NODESTORE` in your *sentry.conf.py*, like this:
 
 ```python
 from datetime import timedelta
 
-SENTRY_NODESTORE = 'sentry_nodestore_tablestore.backend.TablestoreNodeStorage'
+SENTRY_NODESTORE = 'sentry_tablestore.nodestore.backend.TablestoreNodeStorage'
 SENTRY_NODESTORE_OPTIONS = {
     # Get help from https://www.alibabacloud.com/help/tablestore/latest/python-sdk-initialization
     'end_point': '',
@@ -56,7 +56,7 @@ Then, add any applicable configuration options. Depending on your environment, a
 
 ```Python
 from datetime import timedelta
-SENTRY_NODESTORE = 'sentry_nodestore_tablestore.backend.TablestoreNodeStorage'
+SENTRY_NODESTORE = 'sentry_tablestore.nodestore.backend.TablestoreNodeStorage'
 SENTRY_NODESTORE_OPTIONS = {
     # Auto clean data for 90 days from its creation
     'default_ttl': timedelta(days=90),
@@ -74,10 +74,10 @@ SENTRY_NODESTORE_OPTIONS = {
 
 # Set log-level for debugging
 import logging
-logger = logging.getLogger('sentry_nodestore_tablestore')
-logger.setLevel('DEBUG')
-logger = logging.getLogger('tablestore-client')
-logger.setLevel('DEBUG')
+logger = logging.getLogger('sentry_tablestore.kvstore.tablestore') # Logger of this project
+logger.setLevel(logging.DEBUG)
+logger = logging.getLogger('tablestore-client') # Logger of Alicloud SDK
+logger.setLevel(logging.DEBUG)
 ```
 
 ## Bootstrap

@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 """
-sentry-nodestore-tablestore
-===========================
+sentry-tablestore
+=================
 
 A Sentry extension to support Alicloud Tablestore (OTS) as a node storage backend.
 """
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 
 with open("README.md", "r") as readme:
     long_description = readme.read()
@@ -16,20 +16,20 @@ install_requires = [
 ]
 
 setup(
-    name='sentry-nodestore-tablestore',
-    version='1.0.0a2',
+    name='sentry-tablestore',
+    version='1.0.0a3',
     author='PM Extra <pm@jubeat.net>',
     author_email='pm@jubeat.net',
-    url='https://github.com/PMExtra/sentry-nodestore-tablestore',
+    url='https://github.com/PMExtra/sentry-tablestore',
     description='A Sentry extension to support Alicloud Tablestore (OTS) as a node storage backend.',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    packages=find_packages(),
+    packages=find_namespace_packages(),
     license='Apache-2.0',
     zip_safe=False,
     install_requires=install_requires,
     include_package_data=True,
-    download_url='https://github.com/PMExtra/sentry-nodestore-tablestore',
+    download_url='https://github.com/PMExtra/sentry-tablestore',
     classifiers=[
         'Framework :: Django',
         'Intended Audience :: Developers',
@@ -39,8 +39,8 @@ setup(
         'Topic :: Software Development'
     ],
     project_urls={
-        'Bug Tracker': 'https://github.com/PMExtra/sentry-nodestore-tablestore/issues',
-        'CI': 'https://github.com/PMExtra/sentry-nodestore-tablestore/actions',
-        'Source Code': 'https://github.com/PMExtra/sentry-nodestore-tablestore',
+        'Bug Tracker': 'https://github.com/PMExtra/sentry-tablestore/issues',
+        'CI': 'https://github.com/PMExtra/sentry-tablestore/actions',
+        'Source Code': 'https://github.com/PMExtra/sentry-tablestore',
     },
 )

@@ -10,7 +10,7 @@ from tablestore import *
 from sentry.utils.codecs import Codec, ZlibCodec, ZstdCodec
 from sentry.utils.kvstore.abstract import KVStorage
 
-logger = logging.getLogger("sentry_nodestore_tablestore")
+logger = logging.getLogger(__name__)
 
 _T = TypeVar('_T')
 
