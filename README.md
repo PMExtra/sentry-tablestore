@@ -1,5 +1,9 @@
 # sentry-tablestore
 
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/PMExtra/sentry-tablestore/sentry-tablestore%20CI)](https://github.com/PMExtra/sentry-tablestore/actions)
+[![PyPI](https://img.shields.io/pypi/v/sentry-tablestore)](https://pypi.org/project/sentry-tablestore/)
+[![License](https://img.shields.io/pypi/l/sentry-tablestore)](https://raw.githubusercontent.com/PMExtra/sentry-tablestore/master/LICENSE.txt)
+
 An extension for Sentry which support [Alicloud Tablestore (OTS)](https://www.alibabacloud.com/product/table-store)
 as a [node storage](https://develop.sentry.dev/services/nodestore/) backend.
 
@@ -73,6 +77,7 @@ SENTRY_NODESTORE_OPTIONS = {
 }
 
 # Set log-level for debugging
+# Make sure LOGGING.disable_existing_loggers is set to False (in sentry/conf/server.py)
 import logging
 logger = logging.getLogger('sentry_tablestore.kvstore.tablestore') # Logger of this project
 logger.setLevel(logging.DEBUG)
