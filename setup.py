@@ -17,7 +17,7 @@ install_requires = [
 
 setup(
     name='sentry-tablestore',
-    version='1.0.0b1',
+    version='1.0.0b2',
     author='PM Extra <pm@jubeat.net>',
     author_email='pm@jubeat.net',
     url='https://github.com/PMExtra/sentry-tablestore',

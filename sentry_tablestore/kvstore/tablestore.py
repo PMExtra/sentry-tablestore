@@ -88,7 +88,7 @@ class TablestoreKVStorage(KVStorage[str, bytes]):
 
     def get(self, key: str) -> Optional[bytes]:
         try:
-            _, row, _ = self._get_client().get_row(self.table_name, self.__tuple_key(key), )
+            _, row, _ = self._get_client().get_row(self.table_name, self.__tuple_key(key), max_version=1)
         except OTSServiceError as e:
             logger.debug("Failed to get row (%s) with (%s).", key, e)
             return None
