@@ -33,7 +33,7 @@ that is [Alicloud Tablestore (OTS)](https://www.alibabacloud.com/product/table-s
 ## Prerequisites
 Sentry 21.9.0 or higher.
 
-An Tablestore instance of [Alibaba Cloud (International)](https://www.alibabacloud.com/product/table-store)
+A Tablestore instance of [Alibaba Cloud (International)](https://www.alibabacloud.com/product/table-store)
 or [Aliyun (China)](https://www.aliyun.com/product/ots?source=5176.11533457&userCode=wh20sycz).
 
 ## Installation
